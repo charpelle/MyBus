@@ -47,4 +47,4 @@ const SwitchNavigator = createSwitchNavigator(
   }
 )
 
-export default createAppContainer(SwitchNavigator)
+export default createAppContainer(TabNavigator)

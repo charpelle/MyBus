@@ -9,10 +9,12 @@ import FilterButton from '../components/FilterButton'
 import HeaderComponent from '../components/HeaderComponent'
 import ResultCard from '../components/ResultCard';
 
+import firebase from '../config/fbConfig';
+
 export default class ResultScreen extends Component {
   state = {
     isLoading: false,
-    courses: []
+    bookings: []
   }
 
   static navigationOptions = ({ navigation}) => ({
@@ -22,8 +24,57 @@ export default class ResultScreen extends Component {
     headerRight: <FilterButton />
   })
 
+  componentDidMount() {
+    this.getData()
+    // this.populateData()
+  }
+
+  getData = () => {
+    this.setState({ isLoading: true })
+    const bookingRef = firebase.firestore().collection('bookings')
+    this.unsubscribe = bookingRef.onSnapshot(querySnapshot => {
+      const bookings = [];
+      
+      querySnapshot.forEach(doc => {
+        const { company, category, seats, time, stops, comfort, cost } = doc.data();
+        bookings.push({
+          key: doc.id,
+          doc,
+          company,
+          category,
+          seats,
+          time,
+          stops,
+          comfort,
+          cost
+        })
+      })
+      this.setState({ bookings, isLoading: false })
+    })
+  }
+
+  populateData = () => {
+    dailyBookings.forEach(function(obj) {
+      firebase.firestore().collection("bookings").add({
+          company: obj.company,
+          category: obj.category,
+          seats: obj.seats,
+          time: obj.time,
+          stops: obj.stops,
+          comfort: obj.comfort,
+          cost: obj.cost
+      }).then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+      })
+      .catch(function(error) {
+          console.error("Error adding document: ", error);
+      });
+  });
+  }
 
   render() {
+    console.log('state', this.state)
+    if (this.state.isLoading) return null
     return (
       <Container>
         <DateContainer>
@@ -32,18 +83,8 @@ export default class ResultScreen extends Component {
         <ScrollView
           
         >
-          {resultCard.map((data, index) => (
-            <ResultCard 
-              key={index}
-              image={data.image}
-              company={data.company}
-              category={data.category}
-              seats={data.seats}
-              time={data.time}
-              stops={data.stops}
-              comfort={data.comfort}
-              cost={data.cost}
-            />
+          {this.state.bookings.map((data, index) => (
+            <ResultCard key={index} image={require("../assets/buss.png")} data={data} />
           ))}
         </ScrollView>
       </Container>
@@ -66,3 +107,42 @@ const DateText = styled.Text`
   font-size: 15px;
   font-weight: 300;
 `
+
+const dailyBookings = [
+  {
+    company: 'GIG',
+    category: 'NON A/C SEATERS/SLEEPERS (3+1)',
+    seats: '33 seats',
+    time: '03:03 hrs',
+    stops: '1 rest stop',
+    comfort: 'Luxury',
+    cost: '120'
+  },
+  {
+    company: 'Chisco',
+    category: 'NON A/C SEATERS/SLEEPERS (3+1)',
+    seats: '33 seats',
+    time: '03:03 hrs',
+    stops: '1 rest stop',
+    comfort: 'Luxury',
+    cost: '120'
+  },
+  {
+    company: 'Young',
+    category: 'NON A/C SEATERS/SLEEPERS (3+1)',
+    seats: '33 seats',
+    time: '03:03 hrs',
+    stops: '1 rest stop',
+    comfort: 'Luxury',
+    cost: '120'
+  },
+  {
+    company: 'Peace',
+    category: 'NON A/C SEATERS/SLEEPERS (3+1)',
+    seats: '33 seats',
+    time: '03:03 hrs',
+    stops: '1 rest stop',
+    comfort: 'Luxury',
+    cost: '120'
+  }
+]

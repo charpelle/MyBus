@@ -2,25 +2,25 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
 
-const ResultCard = (props) => {
+const ResultCard = ({ image, data }) => {
   return (
     <Container>
       <FirstColumn>
-        <Logo source={props.image} />
+        <Logo source={image} />
       </FirstColumn>
       <SecondColumn>
-        <BodyText style={{ fontSize: 15, fontWeight: 'bold' }}>{props.company}</BodyText>
-        <BodyText style={{ color: '#b8bece' }}>{props.category}</BodyText>
+        <BodyText style={{ fontSize: 15, fontWeight: 'bold' }}>{data.company}</BodyText>
+        <BodyText style={{ color: '#b8bece' }}>{data.category}</BodyText>
         <Wrapper>
-          <BodyText style={{ color: '#b8bece' }}>{props.seats}</BodyText>
-          <BodyText style={{ color: '#b8bece' }}>{props.time}</BodyText>
-          <BodyText style={{ color: '#b8bece' }}>{props.stops}</BodyText>
+          <BodyText style={{ color: '#b8bece' }}>{data.seats}</BodyText>
+          <BodyText style={{ color: '#b8bece' }}>{data.time}</BodyText>
+          <BodyText style={{ color: '#b8bece' }}>{data.stops}</BodyText>
         </Wrapper>
           <BodyText>Rating</BodyText>
       </SecondColumn>
       <ThirdColumn>
-        <BodyText>{props.comfort}</BodyText>
-        <BodyText style={{ marginBottom: 0, fontWeight: 'bold' }}>{props.cost}</BodyText>
+        <BodyText>{data.comfort}</BodyText>
+        <BodyText style={{ marginBottom: 0, fontWeight: 'bold' }}>{data.cost}</BodyText>
       </ThirdColumn>
     </Container>
   )
