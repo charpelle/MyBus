@@ -1,13 +1,11 @@
 import { combineReducers } from 'redux';
-import { firestoreReducer } from 'redux-firestore';
-import { firebaseReducer } from 'react-redux-firebase';
 
-import bookingReducer from './bookingReducer';
+// import bookingReducer from './bookingReducer';
+import userReducer from './userReducer';
 
 const rootReducer = combineReducers({
-  bookings: bookingReducer,
-  firestore: firestoreReducer,
-  firebase: firebaseReducer
+  // bookings: bookingReducer,
+  user: userReducer
 })
 
 export default rootReducer;
