@@ -11,11 +11,13 @@ import ReservationDetailScreen from '../screens/ReservationDetailScreen'
 import AccountScreen from '../screens/AccountScreen'
 import NotificationScreen from '../screens/NotificationScreen'
 import PreviousScreen from '../screens/PreviousScreen';
+import LoginScreen from '../screens/LoginModal'
 import Login from '../screens/Login';
 import Signup from '../screens/Signup'
 import Profile from '../screens/Profile'
 
 const HomeStack = createStackNavigator({
+  LoginScreen,
   ResultScreen,
   PreviousScreen,
   NotificationScreen,

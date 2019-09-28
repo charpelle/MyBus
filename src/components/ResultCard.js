@@ -1,6 +1,10 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import styled from 'styled-components'
+import { FontAwesome } from '@expo/vector-icons'
+
+
+import RatingComponent from './RatingComponent';
 
 const ResultCard = ({ image, data }) => {
   return (
@@ -12,11 +16,13 @@ const ResultCard = ({ image, data }) => {
         <BodyText style={{ fontSize: 15, fontWeight: 'bold' }}>{data.company}</BodyText>
         <BodyText style={{ color: '#b8bece' }}>{data.category}</BodyText>
         <Wrapper>
-          <BodyText style={{ color: '#b8bece' }}>{data.seats}</BodyText>
+          <BodyText style={{ color: '#b8bece' }}>{data.seats} {'seats'}</BodyText>
+          <FontAwesome name="circle" size="12" color="gray" />
           <BodyText style={{ color: '#b8bece' }}>{data.time}</BodyText>
+          <FontAwesome name="circle" size="12" color="gray" />
           <BodyText style={{ color: '#b8bece' }}>{data.stops}</BodyText>
         </Wrapper>
-          <BodyText>Rating</BodyText>
+          <BodyText><RatingComponent rating={data.rating} /></BodyText>
       </SecondColumn>
       <ThirdColumn>
         <BodyText>{data.comfort}</BodyText>
@@ -59,4 +65,5 @@ const ThirdColumn = styled.View`
 `
 const Wrapper = styled.View`
   flex-direction: row;
+  align-items: stretch;
 `

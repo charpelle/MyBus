@@ -10,6 +10,7 @@ import HeaderComponent from '../components/HeaderComponent'
 import ResultCard from '../components/ResultCard';
 
 import firebase from '../config/fbConfig';
+import axios from '../utils/axiosConfig';
 
 export default class ResultScreen extends Component {
   state = {
@@ -25,55 +26,16 @@ export default class ResultScreen extends Component {
   })
 
   componentDidMount() {
-    this.getData()
-    // this.populateData()
+    this.nationalExpress()
   }
 
-  getData = () => {
-    this.setState({ isLoading: true })
-    const bookingRef = firebase.firestore().collection('bookings')
-    this.unsubscribe = bookingRef.onSnapshot(querySnapshot => {
-      const bookings = [];
-      
-      querySnapshot.forEach(doc => {
-        const { company, category, seats, time, stops, comfort, cost } = doc.data();
-        bookings.push({
-          key: doc.id,
-          doc,
-          company,
-          category,
-          seats,
-          time,
-          stops,
-          comfort,
-          cost
-        })
-      })
-      this.setState({ bookings, isLoading: false })
-    })
+  nationalExpress = () => {
+    axios.get('/bookings')
+      .then(response => this.setState({ bookings: response.data }))
   }
 
-  populateData = () => {
-    dailyBookings.forEach(function(obj) {
-      firebase.firestore().collection("bookings").add({
-          company: obj.company,
-          category: obj.category,
-          seats: obj.seats,
-          time: obj.time,
-          stops: obj.stops,
-          comfort: obj.comfort,
-          cost: obj.cost
-      }).then(function(docRef) {
-          console.log("Document written with ID: ", docRef.id);
-      })
-      .catch(function(error) {
-          console.error("Error adding document: ", error);
-      });
-  });
-  }
-
+  
   render() {
-    console.log('state', this.state)
     if (this.state.isLoading) return null
     return (
       <Container>
